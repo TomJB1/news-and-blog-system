@@ -12,6 +12,14 @@ function GetBlocks($url)
     return $stmt->fetch()[0];
 }
 
-echo $page;
-echo GetBlocks("/hi");
+
+if(preg_match('/(?<interface>(write)|(config))(?<article>.*)/', $page, $matches))
+{
+    $article = $matches["article"];
+    include $matches["interface"].'.php';
+}
+else
+{
+    include 'page.php';
+}
 ?>
