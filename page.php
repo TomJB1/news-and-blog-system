@@ -5,8 +5,10 @@ echo '<br>';
 echo $page;
 
 
-$blockarray = [["title", "h"], ["title", "2"]];#GetBlocks($page);
+$blockarray = json_decode(GetBlocks($page)[0]);
 
+echo '<div id="page">';
 echo Blocks2Html($blockarray);
+echo '</div>';
 
 ?>

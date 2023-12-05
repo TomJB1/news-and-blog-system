@@ -16,15 +16,19 @@ function NewPage($url)
     $stmt->execute(array($url));
 }
 
+echo '<pre>' . print_r(get_defined_vars(), true) . '</pre>';
+
 if(isset($_GET["page"]))
 {
-    if(isset($_GET["newpage"]))
+    var_dump($_POST);
+    if(isset($_POST["newpage"]))
     {
-        echo NewPage($_GET["newpage"]);
+        echo NewPage($_POST["newpage"]);
     }
-    else if(isset($_GET["newblocks"]))
+    else if(isset($_POST["newblocks"]))
     {
-        echo ChangeBlocks($_GET["newblocks"], $_GET["page"]);
+        ChangeBlocks($_POST["newblocks"], $_GET["page"]);
+        echo 'new';
     }
     else
     {

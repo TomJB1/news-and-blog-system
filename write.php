@@ -1,7 +1,12 @@
 <?php
 echo 'write.php';
 echo $article;
-$temp = json_encode([["title", "hi"]]);
+$blockarray = json_decode(GetBlocks($article)[0]);
+var_dump($blockarray);
+
+echo '<div id="page">';
+echo Blocks2Html($blockarray, true);
+echo '</div>';
 
 ?>
-<script src="/write.js"></script>
+<script defer src="/write.js"></script>
