@@ -1,17 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body id="page">
 <?php
-$domain = $_SERVER['SERVER_NAME'];
-$page = $_SERVER['REQUEST_URI'];
-global $pdo;
-$pdo = new  PDO("sqlite:databases/".$domain.".db");
-
-function GetBlocks($url)
-{
-    global $pdo;
-    $stmt = $pdo->prepare("SELECT [blocks] FROM pages WHERE [url]=?");
-    $stmt->execute(array($url));
-    return $stmt->fetch()[0];
-}
-
+include 'setup.php';
 
 if(preg_match('/(?<interface>(write)|(config))(?<article>.*)/', $page, $matches))
 {
@@ -23,3 +19,5 @@ else
     include 'page.php';
 }
 ?>
+</body>
+</html>
