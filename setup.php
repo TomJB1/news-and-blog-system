@@ -15,30 +15,24 @@ function GetBlocks($url)
 
 function Blocks2Html($blockarray, $editable=false)
 {
-    var_dump($blockarray);
     $html = "";
-    $inline = "";
+    $attributes = "";
     if($editable)
     {
-        $inline = "contenteditable";
+        $attributes = "contenteditable";
     }
     foreach ($blockarray as $id => $block) {
         $filename = "templates/".$block[0].'.template';
         $file = fopen($filename, "r");
         $blockhtml = fread($file,filesize($filename));
-        $html = $html."<div id='$block[0]' ".$inline.">".preg_replace_callback("/{([0-9])}/", 
-        function($matches) use ($block)
+        print_r($block);
+        $html = $html."<div class='block' id='$block[0]'>".preg_replace_callback("/{([0-9])}/", 
+        function($matches) use ($block, $attributes)
         {
-            var_dump($matches);
-            return $block[$matches[1]];
+            return "<div class='variable' $attributes>".$block[$matches[1]]."</div>";
         },
         $blockhtml)."</div>";
     }
     return $html;
-}
-
-function Html2Blocks($html)
-{
-
 }
 ?>

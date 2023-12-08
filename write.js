@@ -8,7 +8,14 @@ function ToBlocks()
     blocks = [];
     i = 0;
     Array.from(htmlblocks).forEach(function (element) {
-        blocks[i] = [element.id, element.innerText];
+        j = 0;
+        variables = [];
+        Array.from(element.querySelectorAll(".variable")).forEach(variable => {
+            variables[j] = variable.innerText;
+            j++;
+        });
+        block = [element.id, ...variables];
+        blocks[i] = block;
         i ++;
       });
     return JSON.stringify(blocks);
