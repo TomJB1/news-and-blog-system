@@ -6,6 +6,11 @@
     <title>Document</title>
 </head>
 <body>
+<style>
+    <?php
+        include 'reset.css';
+    ?>
+</style>
 <?php
 include 'setup.php';
 
