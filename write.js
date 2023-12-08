@@ -1,26 +1,22 @@
-page = document.getElementById("page");
-
+url = window.location.href;
+pagediv = document.getElementById("page");
+pagename = url.split("/")[4];
 
 function ToBlocks()
 {
-    htmlblocks = page.children;
+    htmlblocks = pagediv.children;
     blocks = [];
     i = 0;
-    //console.log(htmlblocks);
     Array.from(htmlblocks).forEach(function (element) {
-        //console.log(element);
         blocks[i] = [element.id, element.innerText];
         i ++;
       });
-      //console.log(blocks);
     return JSON.stringify(blocks);
 }
 
-
-
 function Save()
 {
-    fetch("/write-rest.php?page=/hii",
+    fetch("/write-rest.php?page=/"+pagename,
     {
         method: "POST",
 
