@@ -26,6 +26,10 @@ if(isset($_GET["page"]))
     {
         ChangeBlocks($_POST["newblocks"], $_GET["page"]);
     }
+    else if(isset($_GET["getblocks"]))
+    {
+        echo GetAllTemplates();
+    }
     else
     {
         echo Blocks2Html(json_decode(GetBlocks($_GET["page"])));
