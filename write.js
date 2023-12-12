@@ -63,7 +63,7 @@ function Save()
 
 function deleteSelected()
 {
-    if(selectedNode.className == ".block")
+    if(selectedNode.className == "block")
     {
         selectedNode.remove();
     }
