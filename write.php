@@ -1,17 +1,14 @@
 <link rel="stylesheet" type="text/css" href="/write.css" />
-<div class="headerblock">
-    <div class="writeheader">
-
-    <?php
-    echo 'write.php';
-    echo $article;
-    $blockarray = json_decode(GetBlocks($article)[0]);
-    ?>
-
-    </div>
-</div>
-
 <div id="page">
+    <div class="headerblock">
+        <div class="writeheader">
+        <?php
+        echo 'write.php';
+        echo $article;
+        $blockarray = json_decode(GetBlocks($article)[0]);
+        ?>
+        </div>
+    </div>
 <?php
 echo Blocks2Html($blockarray, true);
 ?>

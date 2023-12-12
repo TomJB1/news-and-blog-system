@@ -9,7 +9,7 @@ var selectedNode;
 
 function ToBlocks()
 {
-    htmlblocks = pagediv.children;
+    htmlblocks = pagediv.getElementByClassName("block");
     blocks = [];
     i = 0;
     Array.from(htmlblocks).forEach(function (element) {
@@ -28,7 +28,7 @@ function ToBlocks()
 
 async function LoadAvailableBlocks()
 {
-    const responce = await fetch("/write-rest.php?page=/"+pagename+"&getblocks=true"); //[["title", '<h1>$var</h1>']];
+    const responce = await fetch("/write-rest.php?page=/"+pagename+"&getblocks=true");
     availableBlocks = await responce.json();
 }
 
