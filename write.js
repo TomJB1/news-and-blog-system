@@ -61,6 +61,14 @@ function Save()
     });
 }
 
+function deleteSelected()
+{
+    if(selectedNode.className == ".block")
+    {
+        selectedNode.remove();
+    }
+}
+
 LoadAvailableBlocks().then(function()
 {
     console.log(availableBlocks);
@@ -77,12 +85,13 @@ LoadAvailableBlocks().then(function()
 });
 
 document.addEventListener("click", (e) => {
-    if(e.target.className == 'variable')
+    if(e.target.className == 'variable' || e.target.className == 'writeheader' )
     {
         console.log(e);
-        extrasDiv.style.top = (e.target.offsetTop + e.target.offsetHeight + 10) + "px";
+        block = e.target.closest(".block, .headerblock");
+        extrasDiv.style.top = (block.offsetTop + block.offsetHeight + 10) + "px";
         extrasDiv.classList.remove("hidden")
-        selectedNode = e.target.closest(".block");
+        selectedNode = block;
     }
     else
     {

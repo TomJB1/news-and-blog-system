@@ -20,7 +20,7 @@ function Blocks2Html($blockarray, $editable=false)
     if($editable)
     {
         $attributes = "contenteditable";
-        print_r($blockarray);
+        #print_r($blockarray);
     }
     foreach ($blockarray as $id => $block) {
         $filename = "templates/".$block[0].'.template';

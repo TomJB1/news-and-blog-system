@@ -7,3 +7,13 @@
 {
     display: none;
 }
+
+.writeheader
+{
+    background-color: red;
+}
+
+.block:hover
+{
+    outline: black 1px solid;
+}
