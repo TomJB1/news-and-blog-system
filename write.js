@@ -30,7 +30,6 @@ async function LoadAvailableBlocks()
 {
     const responce = await fetch("/write-rest.php?page=/"+pagename+"&getblocks=true"); //[["title", '<h1>$var</h1>']];
     availableBlocks = await responce.json();
-    console.log(availableBlocks);
 }
 
 
@@ -42,7 +41,6 @@ function AddBlock(blockid)
     block.className = 'block';
     block.id = blockArray[0];
     block.innerHTML = blockHtml;
-    console.log(selectedNode);
     selectedNode.after(block);
 }
 
@@ -71,10 +69,8 @@ function deleteSelected()
 
 LoadAvailableBlocks().then(function()
 {
-    console.log(availableBlocks);
     i = 0;
     availableBlocks.forEach(block => {
-        console.log(block[0]);
         addingButton = document.createElement('input');
         addingButton.setAttribute("type", "button");
         addingButton.value = "add "+block[0];
@@ -87,7 +83,6 @@ LoadAvailableBlocks().then(function()
 document.addEventListener("click", (e) => {
     if(e.target.className == 'variable' || e.target.className == 'writeheader' )
     {
-        console.log(e);
         block = e.target.closest(".block, .headerblock");
         extrasDiv.style.top = (block.offsetTop + block.offsetHeight + 10) + "px";
         extrasDiv.classList.remove("hidden")
