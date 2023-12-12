@@ -2,3 +2,8 @@
 {
     position: fixed;
 }
+
+.hidden
+{
+    display: none;
+}

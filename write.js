@@ -5,7 +5,7 @@ pagename = url.split("/")[4];
 
 availableBlocks = [];
 
-var nodeBefore;
+var selectedNode;
 
 function ToBlocks()
 {
@@ -30,6 +30,7 @@ async function LoadAvailableBlocks()
 {
     const responce = await fetch("/write-rest.php?page=/"+pagename+"&getblocks=true"); //[["title", '<h1>$var</h1>']];
     availableBlocks = await responce.json();
+    console.log(availableBlocks);
 }
 
 
@@ -41,7 +42,8 @@ function AddBlock(blockid)
     block.className = 'block';
     block.id = blockArray[0];
     block.innerHTML = blockHtml;
-    pagediv.insertBefore(block, nodeBefore);
+    console.log(selectedNode);
+    selectedNode.after(block);
 }
 
 function Save()
@@ -78,7 +80,13 @@ document.addEventListener("click", (e) => {
     if(e.target.className == 'variable')
     {
         console.log(e);
-        extrasDiv.style.top = (e.target.offsetTop -30) + "px";
-        nodeBefore = e.target.closest(".block");
+        extrasDiv.style.top = (e.target.offsetTop + e.target.offsetHeight + 10) + "px";
+        extrasDiv.classList.remove("hidden")
+        selectedNode = e.target.closest(".block");
+    }
+    else
+    {
+        extrasDiv.style.top = null;
+        extrasDiv.classList.add("hidden")
     }
 })
