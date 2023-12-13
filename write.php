@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/write.css" />
+<link rel="stylesheet" type="text/css" href="/write-frontend/write.css" />
 <div id="page">
     <div class="headerblock">
         <div class="writeheader">
@@ -17,5 +17,5 @@ echo Blocks2Html($blockarray, true);
 <div id="writeExtras">
     <input type="button" value="save" onclick="Save()">
     <input type="button" value="remove" onclick="deleteSelected()">
-    <script defer src="/write.js"></script>
+    <script defer src="/write-frontend/write.js"></script>
 </div>

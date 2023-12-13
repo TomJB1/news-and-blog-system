@@ -9,7 +9,7 @@ var selectedNode;
 
 function ToBlocks()
 {
-    htmlblocks = pagediv.getElementByClassName("block");
+    htmlblocks = pagediv.getElementsByClassName("block");
     blocks = [];
     i = 0;
     Array.from(htmlblocks).forEach(function (element) {
