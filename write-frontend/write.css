@@ -15,5 +15,6 @@
 
 .block:hover
 {
-    outline: black 1px solid;
+    outline: white 1px solid;
+    box-shadow: black 1px 1px 5px;
 }
