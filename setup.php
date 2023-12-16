@@ -26,10 +26,10 @@ function Blocks2Html($blockarray, $editable=false)
         $filename = "templates/".$block[0].'.template';
         $file = fopen($filename, "r");
         $template = fread($file,filesize($filename));
-        $html = $html."<div class='block' id='$block[0]'>".preg_replace_callback("/{([0-9])}/", 
+        $html = $html."<div class='block' id='$block[0]'>".preg_replace_callback("/>(.*){([0-9])}/", 
         function($matches) use ($block, $attributes)
         {
-            return "<div class='variable' $attributes>".$block[$matches[1]]."</div>";
+            return " class='variable' $attributes>".$matches[1].$block[$matches[2]];
         },
         $template)."</div>";
     }
