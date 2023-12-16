@@ -1,17 +1,23 @@
 <?php
-
+# define variables
 $domain = $_SERVER['SERVER_NAME'];
-$page = $_SERVER['REQUEST_URI'];
 global $pdo;
 $pdo = new  PDO("sqlite:databases/".$domain.".db");
-
-function GetBlocks($url)
+$page = $_SERVER['REQUEST_URI'];
+if(preg_match('/(?<interface>(write)|(config))(?<article>.*)/', $page, $matches))
 {
-    global $pdo;
-    $stmt = $pdo->prepare("SELECT [blocks] FROM pages WHERE [url]=?");
-    $stmt->execute(array($url));
-    return $stmt->fetch();
+    $article = $matches["article"];
+    $interface = $matches["interface"].'.php';
 }
+else
+{
+    $interface = 'page.php';
+    $article = $page;
+}
+
+$stmt = $pdo->prepare("SELECT [blocks], [theme] FROM pages WHERE [url]=?");
+$stmt->execute(array($article));
+$pageinfo = $stmt->fetch();
 
 function Blocks2Html($blockarray, $editable=false)
 {

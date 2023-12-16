@@ -5,7 +5,7 @@
         <?php
         echo 'write.php';
         echo $article;
-        $blockarray = json_decode(GetBlocks($article)[0]);
+        $blockarray = json_decode($pageinfo["blocks"]);
         ?>
         </div>
     </div>

@@ -6,23 +6,18 @@
     <title>Document</title>
 </head>
 <body>
+    <?php 
+    include 'setup.php';
+    ?>
 <style>
     <?php
         include 'reset.css';
+        include 'themes/'.$pageinfo["theme"].'.css';
     ?>
 </style>
 <?php
-include 'setup.php';
+include $interface;
 
-if(preg_match('/(?<interface>(write)|(config))(?<article>.*)/', $page, $matches))
-{
-    $article = $matches["article"];
-    include $matches["interface"].'.php';
-}
-else
-{
-    include 'page.php';
-}
 ?>
 </body>
 </html>
