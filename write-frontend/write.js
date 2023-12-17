@@ -7,6 +7,26 @@ availableBlocks = [];
 
 var selectedNode;
 
+function simplifyHTML(html)
+{
+    console.log(html);
+    html = html.replace(/\<span class="\s*(.*?) textstyle">(.*?)<\/span>/g, "^$1* $2 *$1*");
+    
+    html = html.replace(/\*([^\*\^]*)\*(\s*)\^([^\*\^]*)\*/g,
+    function(match, tag1, contents, tag2)
+    {
+        if(tag1 == tag2)
+        {
+            return contents;
+        }
+        else
+        {
+            return match;
+        }
+    });
+    return html
+}
+
 function ToBlocks()
 {
     htmlblocks = pagediv.getElementsByClassName("block");
@@ -16,7 +36,7 @@ function ToBlocks()
         j = 0;
         variables = [];
         Array.from(element.querySelectorAll(".variable")).forEach(variable => {
-            variables[j] = variable.innerText;
+            variables[j] = simplifyHTML(variable.innerHTML);
             j++;
         });
         block = [element.id, ...variables];
@@ -65,6 +85,24 @@ function deleteSelected()
     {
         selectedNode.remove();
     }
+}
+
+function addLink()
+{
+    if (window.getSelection().toString())
+    {
+        var a = document.createElement('a');
+        a.href = prompt("enter a url: ");
+        window.getSelection().getRangeAt(0).surroundContents(a);
+    }
+}
+
+function addWrappingNode(tag)
+{
+    newnode = document.createElement('span');
+    newnode.classList = tag + " textstyle";
+    window.getSelection().getRangeAt(0).surroundContents(newnode);
+    
 }
 
 LoadAvailableBlocks().then(function()

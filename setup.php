@@ -39,6 +39,12 @@ function Blocks2Html($blockarray, $editable=false)
         },
         $template)."</div>";
     }
+    $html = preg_replace_callback("/\^(bold|italic)\*(.*?)\*(bold|italic)\*/",
+    function($matches)
+    {
+        return "<span class=' $matches[1] textstyle'> $matches[2] </span>";
+    },
+    $html);
     return $html;
 }
 

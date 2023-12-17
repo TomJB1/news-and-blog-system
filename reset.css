@@ -12,3 +12,8 @@ body
 {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
+
+#page span.textstyle.bold
+{
+    font-weight: bolder;
+}
