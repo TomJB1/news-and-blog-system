@@ -1,6 +1,6 @@
 <?php
 
-include 'setup.php';
+include 'setup/setup.php';
 
 function ChangeBlocks($text, $url)
 {

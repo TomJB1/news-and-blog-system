@@ -7,11 +7,11 @@ $page = $_SERVER['REQUEST_URI'];
 if(preg_match('/(?<interface>(write)|(config))(?<article>.*)/', $page, $matches))
 {
     $article = $matches["article"];
-    $interface = $matches["interface"].'.php';
+    $interface = "writer/".$matches["interface"].'.php';
 }
 else
 {
-    $interface = 'page.php';
+    $interface = 'page/page.php';
     $article = $page;
 }
 
@@ -29,7 +29,7 @@ function Blocks2Html($blockarray, $editable=false)
         #print_r($blockarray);
     }
     foreach ($blockarray as $id => $block) {
-        $filename = "templates/".$block[0].'.template';
+        $filename = "templates/".$block[0].'/template.html';
         $file = fopen($filename, "r");
         $template = fread($file,filesize($filename));
         $html = $html."<div class='block' id='$block[0]'>".preg_replace_callback("/>(.*){([0-9])}/", 
@@ -53,11 +53,10 @@ function GetAllTemplates()
     $templates = array_diff(scandir("./templates"), array('.', '..'));
     $templateArray = [];
     foreach ($templates as $id => $name) {
-        $blockname = explode('.', $name)[0];
-        $filename = "templates/".$name;
+        $filename = "templates/".$name."/template.html";
         $file = fopen($filename, "r");
         $template = preg_replace("/{([0-9])}/", '|var', fread($file,filesize($filename)));
-        array_push($templateArray, [$blockname, $template]);
+        array_push($templateArray, [$name, $template]);
     }
     return json_encode($templateArray);
 }

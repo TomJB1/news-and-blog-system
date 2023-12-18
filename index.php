@@ -7,11 +7,11 @@
 </head>
 <body>
     <?php 
-    include 'setup.php';
+    include 'setup/setup.php';
     ?>
 <style>
     <?php
-        include 'reset.css';
+        include 'setup/reset.css';
         include 'themes/'.$pageinfo["theme"].'.css';
     ?>
 </style>
