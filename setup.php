@@ -42,7 +42,7 @@ function Blocks2Html($blockarray, $editable=false)
     $html = preg_replace_callback("/\^(.*?)\*(.*?)\*(.*?)\*/",
     function($matches)
     {
-        return "<span class='$matches[1] textstyle'> $matches[2] </span>";
+        return "<span class='$matches[1] textstyle'>$matches[2] </span>";
     },
     $html);
     return $html;
