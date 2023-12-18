@@ -13,12 +13,20 @@ body
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+#page span.textstyle.normal
+{
+    font-style: normal;
+    font-weight: normal;
+}
+
 #page span.textstyle.bold
 {
+    font-style: normal;
     font-weight: bolder;
 }
 
 #page span.textstyle.italic
 {
+    font-weight: normal;
     font-style: italic;
 }
