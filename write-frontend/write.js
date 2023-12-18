@@ -57,7 +57,7 @@ async function LoadAvailableBlocks()
 function AddBlock(blockid)
 {
     blockArray = availableBlocks[blockid];
-    blockHtml = (blockArray[1]).replaceAll("|var", "<div class='variable' contenteditable>write here</div>");
+    blockHtml = (blockArray[1]).replaceAll("|var", "<div class='variable' contenteditable><span class='normal textstyle'>write here</span></div>");
     block = document.createElement('div');
     block.className = 'block';
     block.id = blockArray[0];
@@ -106,10 +106,9 @@ function removeEmptyNodes(node)
     {
         node.remove();
     }
-    else if(node.children.length == 1)
+    else if(node.childNodes.length == 1)
     {
-        console.log(node.children[0].tagName);
-        if(node.children[0].tagName == "SPAN")
+        if(node.childNodes[0].nodeType !== Node.TEXT_NODE)
         {
             node.outerHTML = node.innerHTML;
         }
@@ -141,6 +140,7 @@ function addTextStyle(style)
     newnode.innerHTML = window.getSelection().getRangeAt(0).toString();//.replace(/\<span class="\s*(.*?) textstyle">(.*?)<\/span>/g, "$2");
     range.deleteContents();
     range.insertNode(newnode);
+    
     pagediv.normalize();
     simplifyStyleNodes();
 }
