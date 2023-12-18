@@ -1,6 +1,7 @@
 url = window.location.href;
 pagediv = document.getElementById("page");
 extrasDiv = document.getElementById("writeExtras");
+stylingDiv = document.getElementById("styleModifiers");
 pagename = url.split("/")[4];
 
 availableBlocks = [];
@@ -10,7 +11,7 @@ var selectedNode;
 function simplifyHTML(html)
 {
     console.log(html);
-    html = html.replace(/\<span class="\s*(.*?) textstyle">(.*?)<\/span>/g, "^$1* $2 *$1*");
+    html = html.replace(/\<span class="\s*(.*?) textstyle">(.*?)<\/span>/g, "^$1*$2*$1*");
     
     html = html.replace(/\*([^\*\^]*)\*(\s*)\^([^\*\^]*)\*/g,
     function(match, tag1, contents, tag2)
@@ -97,12 +98,51 @@ function addLink()
     }
 }
 
-function addWrappingNode(tag)
+function removeEmptyNodes(node)
+{
+    console.log(node);
+    node.normalize();
+    if(!node.hasChildNodes())
+    {
+        node.remove();
+    }
+    else if(node.children.length == 1)
+    {
+        console.log(node.children[0].tagName);
+        if(node.children[0].tagName == "SPAN")
+        {
+            node.outerHTML = node.innerHTML;
+        }
+    }
+    else if(node.children.length)
+    {
+        console.log(node.children);
+        [...node.children].forEach(child =>
+        {
+            removeEmptyNodes(child);
+        })
+    }
+}
+
+function simplifyStyleNodes()
+{
+    [...pagediv.querySelectorAll(".variable > span.textstyle")].forEach(child =>
+    {
+        removeEmptyNodes(child);
+    })
+}
+
+function addTextStyle(style)
 {
     newnode = document.createElement('span');
-    newnode.classList = tag + " textstyle";
-    window.getSelection().getRangeAt(0).surroundContents(newnode);
-    
+    newnode.classList = style + " textstyle";
+    range = window.getSelection().getRangeAt(0);
+    console.log(window.getSelection().getRangeAt(0).toString());
+    newnode.innerHTML = window.getSelection().getRangeAt(0).toString();//.replace(/\<span class="\s*(.*?) textstyle">(.*?)<\/span>/g, "$2");
+    range.deleteContents();
+    range.insertNode(newnode);
+    pagediv.normalize();
+    simplifyStyleNodes();
 }
 
 LoadAvailableBlocks().then(function()
@@ -119,16 +159,21 @@ LoadAvailableBlocks().then(function()
 });
 
 document.addEventListener("click", (e) => {
-    if(e.target.className == 'variable' || e.target.className == 'writeheader' )
+    classlist = e.target.classList;
+    if(classlist.contains('variable') || classlist.contains('writeheader') || classlist.contains('textstyle'))
     {
         block = e.target.closest(".block, .headerblock");
         extrasDiv.style.top = (block.offsetTop + block.offsetHeight + 10) + "px";
-        extrasDiv.classList.remove("hidden")
+        extrasDiv.classList.remove("hidden");
+
+        stylingDiv.style.top = (block.offsetTop - 20) + "px";
+        stylingDiv.classList.remove("hidden");
+
         selectedNode = block;
     }
-    else
+    else if(!e.target.classList.contains("styleModifier"))
     {
-        extrasDiv.style.top = null;
-        extrasDiv.classList.add("hidden")
+        extrasDiv.classList.add("hidden");
+        stylingDiv.classList.add("hidden");
     }
 })
