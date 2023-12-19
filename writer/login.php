@@ -26,7 +26,6 @@ else if(isset($_POST["newusername"]))
     $passwordhash = password_hash($_POST["newpassword"], PASSWORD_DEFAULT);
     $stmt = $pdo->prepare("INSERT INTO writers ([username], [passwordhash], [permissionLevel]) VALUES (?, ?, 1)");
     $stmt->execute(array($_POST["newusername"], $passwordhash));
-    $passwordhash = $stmt->fetch();
 }
 echo '<script type="text/javascript">
         window.location = "";
