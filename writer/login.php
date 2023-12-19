@@ -19,9 +19,6 @@ if(isset($_POST["username"]))
         $stmt = $pdo->prepare("SELECT [username], [permissionLevel] FROM writers WHERE [username]=?");
         $stmt->execute(array($_POST["username"]));
         $_SESSION = $stmt->fetch();
-        echo '<script type="text/javascript">
-        window.location = "";
-        </script>';
     }
 }
 else if(isset($_POST["newusername"]))
@@ -31,6 +28,9 @@ else if(isset($_POST["newusername"]))
     $stmt->execute(array($_POST["newusername"], $passwordhash));
     $passwordhash = $stmt->fetch();
 }
+echo '<script type="text/javascript">
+        window.location = "";
+        </script>';
 ?>
 
 <h2>Login</h2>
