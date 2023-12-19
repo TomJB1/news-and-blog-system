@@ -27,9 +27,13 @@ else if(isset($_POST["newusername"]))
     $stmt = $pdo->prepare("INSERT INTO writers ([username], [passwordhash], [permissionLevel]) VALUES (?, ?, 1)");
     $stmt->execute(array($_POST["newusername"], $passwordhash));
 }
+
+if($_POST)
+{
 echo '<script type="text/javascript">
-        window.location = "";
-        </script>';
+    window.location = "";
+    </script>';
+}
 ?>
 
 <h2>Login</h2>
