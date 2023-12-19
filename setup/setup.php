@@ -2,7 +2,39 @@
 # define variables
 $domain = $_SERVER['SERVER_NAME'];
 global $pdo;
-$pdo = new  PDO("sqlite:databases/".$domain.".db");
+$database = "databases/".$domain.".db";
+if(file_exists($database))
+{
+    $pdo = new  PDO("sqlite:".$database, null, null, [PDO::SQLITE_ATTR_OPEN_FLAGS => PDO::SQLITE_OPEN_READWRITE]);
+}
+else
+{
+    $pdo = new  PDO("sqlite:".$database);
+    $stmt = $pdo->prepare(
+    'CREATE TABLE "pages" (
+        "url"	TEXT,
+        "blocks"	TEXT,
+        "theme"	TEXT
+    );'
+    );
+    $stmt->execute();
+
+    $stmt = $pdo->prepare(
+        'CREATE TABLE "writers" (
+            "id"	INTEGER NOT NULL UNIQUE,
+            "username"	TEXT,
+            "passwordhash"	TEXT,
+            "permissionLevel"	INTEGER,
+            PRIMARY KEY("id" AUTOINCREMENT)
+        );'
+        );
+        $stmt->execute();
+
+        $passwordhash = password_hash("NaBs123", PASSWORD_DEFAULT);
+        $stmt = $pdo->prepare('INSERT INTO writers ([username], [passwordhash], [permissionLevel]) VALUES ("admin", ?, 1)');
+        $stmt->execute(array($passwordhash));
+}
+
 $page = $_SERVER['REQUEST_URI'];
 if(preg_match('/(?<interface>(write)|(config))(?<article>.*)/', $page, $matches))
 {
