@@ -12,7 +12,7 @@ else
     $pdo = new  PDO("sqlite:".$database);
     $stmt = $pdo->prepare(
     'CREATE TABLE "pages" (
-        "url"	TEXT,
+        "url"	TEXT UNIQUE,
         "blocks"	TEXT,
         "theme"	TEXT
     );'
