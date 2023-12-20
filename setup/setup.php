@@ -47,6 +47,11 @@ else
     $article = $page;
 }
 
+if($article == "/")
+{
+    $article = "/home";
+}
+
 $stmt = $pdo->prepare("SELECT [blocks], [theme] FROM pages WHERE [url]=?");
 $stmt->execute(array($article));
 $pageinfo = $stmt->fetch();
