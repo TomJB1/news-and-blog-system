@@ -9,20 +9,9 @@ function ChangeBlocks($text, $url)
     $stmt->execute(array($text, $url));
 }
 
-function NewPage($url)
-{
-    global $pdo;
-    $stmt = $pdo->prepare("INSERT INTO pages (url) VALUES (?)");
-    $stmt->execute(array($url));
-}
-
 if(isset($_GET["page"]))
 {
-    if(isset($_POST["newpage"]))
-    {
-        NewPage($_POST["newpage"]);
-    }
-    else if(isset($_POST["newblocks"]))
+    if(isset($_POST["newblocks"]))
     {
         ChangeBlocks($_POST["newblocks"], $_GET["page"]);
     }
