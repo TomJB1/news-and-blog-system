@@ -9,6 +9,7 @@ if(file_exists($database))
 }
 else
 {
+    # create new database
     $pdo = new  PDO("sqlite:".$database);
     $stmt = $pdo->prepare(
     'CREATE TABLE "pages" (
@@ -17,6 +18,8 @@ else
         "theme"	TEXT
     );'
     );
+    $stmt->execute();
+    $stmt = $pdo->prepare('INSERT INTO pages ([url], [blocks]) VALUES ("/home", "[]")');
     $stmt->execute();
 
     $stmt = $pdo->prepare(
