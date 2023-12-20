@@ -31,7 +31,7 @@ else
         $stmt->execute();
 
         $passwordhash = password_hash("NaBs123", PASSWORD_DEFAULT);
-        $stmt = $pdo->prepare('INSERT INTO writers ([username], [passwordhash], [permissionLevel]) VALUES ("admin", ?, 1)');
+        $stmt = $pdo->prepare('INSERT INTO writers ([username], [passwordhash], [permissionLevel]) VALUES ("admin", ?, 2)');
         $stmt->execute(array($passwordhash));
 }
 

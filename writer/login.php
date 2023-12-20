@@ -20,17 +20,8 @@ if(isset($_POST["username"]))
         $stmt->execute(array($_POST["username"]));
         $_SESSION = $stmt->fetch();
     }
-}
-else if(isset($_POST["newusername"]))
-{
-    $passwordhash = password_hash($_POST["newpassword"], PASSWORD_DEFAULT);
-    $stmt = $pdo->prepare("INSERT INTO writers ([username], [passwordhash], [permissionLevel]) VALUES (?, ?, 1)");
-    $stmt->execute(array($_POST["newusername"], $passwordhash));
-}
 
-if($_POST)
-{
-echo '<script type="text/javascript">
+    echo '<script type="text/javascript">
     window.location = "";
     </script>';
 }
@@ -45,15 +36,4 @@ echo '<script type="text/javascript">
         <input name="password" type="password">
     </lable>
     <input class="login button" type="submit" value="login">
-</form>
-
-<h2>New writer</h2>
-<form  action="" method="POST">
-    <label >Username
-        <input  name="newusername">
-    </label>
-    <label >Password
-        <input name="newpassword" type="password">
-    </lable>
-    <input class="login button" type="submit" value="create">
 </form>

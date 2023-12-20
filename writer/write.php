@@ -27,9 +27,19 @@ if(isset($_SESSION["permissionLevel"]) && $_SESSION["permissionLevel"] >= 1):  /
         <input type="button" value="remove" onclick="deleteSelected()">
         <script defer src="/write-frontend/write.js"></script>
     </div>
-    <?php else:?>
-        <h1>write overview</h1>
-    <?php endif?>
+<?php else:?>
+<?php 
+if($_SESSION["permissionLevel"] >= 2)
+{
+    include 'admin.php';
+}
+else if($_SESSION["permissionLevel"] >= 1)
+{
+    include 'write-overview.php';
+}
+    
+?>
+<?php endif?>
 <?php else: // log in?>
     <?php include 'writer/login.php'?>
 <?php endif?>
