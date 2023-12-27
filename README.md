@@ -31,6 +31,7 @@ Quick Setup:
   - Set up tls (https) with certbot (optional)
   - Clone this repo
   - Set the document root to be the news-and-blog-system directory
+  - Set up redirecting to index (not needed for apache)
   - navigate to https://your.url/write and login as admin (initial password NaBs123) and set up a writer account
   - Start writing! (https://your.url/write)
 
