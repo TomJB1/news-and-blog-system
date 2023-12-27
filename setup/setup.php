@@ -25,7 +25,7 @@ else
     $stmt = $pdo->prepare(
         'CREATE TABLE "writers" (
             "id"	INTEGER NOT NULL UNIQUE,
-            "username"	TEXT,
+            "username"	TEXT NOT NULL UNIQUE,
             "passwordhash"	TEXT,
             "permissionLevel"	INTEGER,
             PRIMARY KEY("id" AUTOINCREMENT)
