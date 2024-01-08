@@ -11,6 +11,27 @@ body
 *
 {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+#page
+{
+    display: grid;
+    grid-template-areas:
+    "left-margin left-breakout content right-breakout right-margin";
+    grid-template-columns: 10px 60px auto 60px 10px;
+}
+
+.block,
+.headerblock
+{
+    grid-area: auto / content-start;
+}
+
+.breakout
+{
+    grid-column: left-breakout-start /right-breakout-end;
 }
 
 #page span.textstyle.normal
