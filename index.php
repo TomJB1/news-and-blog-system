@@ -28,7 +28,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 <style>
     <?php
         include 'setup/reset.css';
-        include 'themes/'.$pageinfo["theme"].'.css';
+        include 'themes/'.$pageinfo["theme"];
     ?>
 </style>
 <?php
