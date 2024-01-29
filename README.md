@@ -5,9 +5,11 @@ A simple system for a blog or small news site that's easy for writers and you ca
 
 Features:
   - create blog or news posts easily
+  - write posts as they will be seen
   - only people with accounts can edit posts
   - layouts and styles easy to apply to posts
   - can make your own layouts and styles with html and css
+  - writer overview page
 
 Coming soon:
   - customisable homepage that updates automatically
@@ -15,7 +17,6 @@ Coming soon:
   - tags for posts
   - more layouts and styles out of the box
   - properly tested
-  - writer overview page
   - create pages using a page template
   - writers with lower permission levels
 
