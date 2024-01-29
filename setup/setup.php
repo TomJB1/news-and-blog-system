@@ -12,15 +12,19 @@ else
     # create new database
     $pdo = new  PDO("sqlite:".$database);
     $stmt = $pdo->prepare(
-    'CREATE TABLE "pages" (
-        "url"	TEXT UNIQUE,
-        "blocks"	TEXT,
-        "theme"	TEXT
-    );'
+        'CREATE TABLE [pages] (
+            [url]	TEXT UNIQUE,
+            [blocks]	TEXT,
+            [theme]	TEXT,
+            [type] TEXT
+        );'
     );
     $stmt->execute();
-    $stmt = $pdo->prepare('INSERT INTO pages ([url], [blocks]) VALUES ("/home", "[]")');
+    $stmt = $pdo->prepare('INSERT INTO pages ([url], [blocks], [type]) VALUES ("/home", "[]", "home")');
     $stmt->execute();
+    $stmt = $pdo->prepare('INSERT INTO pages ([url], [blocks], [type]) VALUES ("empty", "[]", "template")');
+    $stmt->execute();
+
 
     $stmt = $pdo->prepare(
         'CREATE TABLE "writers" (
@@ -30,12 +34,14 @@ else
             "permissionLevel"	INTEGER,
             PRIMARY KEY("id" AUTOINCREMENT)
         );'
-        );
-        $stmt->execute();
+    );
+    $stmt->execute();
 
-        $passwordhash = password_hash("NaBs123", PASSWORD_DEFAULT);
-        $stmt = $pdo->prepare('INSERT INTO writers ([username], [passwordhash], [permissionLevel]) VALUES ("admin", ?, 2)');
-        $stmt->execute(array($passwordhash));
+    $passwordhash = password_hash("NaBs123", PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare('INSERT INTO writers ([username], [passwordhash], [permissionLevel]) VALUES ("admin", ?, 2)');
+    $stmt->execute(array($passwordhash));
+    
+    echo "newdb";
 }
 
 $page = $_SERVER['REQUEST_URI'];

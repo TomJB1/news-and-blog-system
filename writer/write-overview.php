@@ -2,15 +2,26 @@
 <?php
 if($_POST)
 {
-
-    if(isset($_POST["newpageurl"]))
+    if(isset($_POST["template"])&&isset($_POST["newpageurl"]))
     {
-        $stmt = $pdo->prepare("INSERT INTO pages ([url], [blocks]) VALUES (?, '[]')");
-        $stmt->execute(array("/".$_POST["newpageurl"]));
+        // new page
+        $stmt = $pdo->prepare("SELECT [blocks], [theme] FROM pages WHERE [url]=? AND [type]='template'");
+        $stmt->execute(array($_POST["template"]));
+        $template = $stmt->fetch();
+
+        $stmt = $pdo->prepare("INSERT INTO pages ([url], [blocks], [theme], [type]) VALUES (?, ?, ?, 'page')");
+        $stmt->execute(array("/".$_POST["newpageurl"], $template["blocks"], $template["theme"]));
+        echo "new page";
     }
-
-    if(isset($_POST["pageurl"]) && isset($_POST["newtheme"]))
+    else if(isset($_POST["newtemplate"]))
     {
+        // new template
+        $stmt = $pdo->prepare("INSERT INTO pages ([url], [blocks], [type]) VALUES (?, '[]', 'template')");
+        $stmt->execute(array("/".$_POST["newtemplate"]));
+    }
+    else if(isset($_POST["pageurl"]) && isset($_POST["newtheme"]))
+    {
+        // change theme
         $stmt = $pdo->prepare("UPDATE pages SET [theme]=? WHERE [url]=?");
         $stmt->execute(array($_POST["newtheme"], $_POST["pageurl"]));
         echo "updated ".$_POST["pageurl"]." to new theme ".$_POST["newtheme"];
@@ -21,28 +32,39 @@ if($_POST)
 
 } 
 
+$stmt = $pdo->prepare('SELECT [url], [theme] FROM pages WHERE [type]="template"');
+$stmt->execute();
+$templates = $stmt->fetchAll();
+$template_options = "";
+foreach($templates as $i => $template)
+{
+    $url = $template["url"];
+    $template_options .= "<option value=$url>$url</option>";
+}
 
-?>
+echo <<<SECTION
 <h2>New page</h2>
 <form  action="" method="POST">
     <label >Page url
         <input  name="newpageurl">
     </label>
+    <select name="template">
+        $template_options
+    </select>
     <input class="login button" type="submit" value="create">
 </form>
 <h2>Pages</h2>
-<?php 
-    $stmt = $pdo->prepare("SELECT [url], [theme] FROM pages");
-    $stmt->execute();
-    $pages = $stmt->fetchAll();
+SECTION;
+
+function pageGrid($rows, $themes) 
+{
     echo "<table border='1px'>";
-    $themes = array_diff(scandir("./themes"), array('.', '..'));
     $theme_options = "";
     foreach($themes as $i => $theme)
     {
         $theme_options .= "<option value=$theme>$theme</option>";
     }
-    foreach($pages as $id => $page)
+    foreach($rows as $id => $page)
     {
         $theme_options_selected = $theme_options."<option selected value=".$page["theme"].">theme: ".$page["theme"]."</option>";
         $pageurl = $page['url'];
@@ -63,4 +85,23 @@ if($_POST)
         ROW;
     }
     echo '</table>';
+}
+
+    $stmt = $pdo->prepare('SELECT [url], [theme] FROM pages WHERE [type]<>"template"');
+    $stmt->execute();
+    $pages = $stmt->fetchAll();
+    echo "<table border='1px'>";
+    $themes = array_diff(scandir("./themes"), array('.', '..'));
+    pageGrid($pages, $themes)
+?>
+<h2>New template</h2>
+<form  action="" method="POST">
+    <label >template name
+        <input  name="newtemplate">
+    </label>
+    <input class="login button" type="submit" value="create">
+</form>
+<h2> Templates </h2>
+<?php
+pageGrid($templates, $themes)
 ?>
